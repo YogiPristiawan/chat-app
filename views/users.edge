@@ -1,0 +1,66 @@
+@layout('layouts/app')
+@section('body')
+<div class="card-body px-2 pt-0 overflow-auto">
+
+	<div class="container-fluid p-0 user-list d-flex mb-2 px-2">
+		<a href="#message" class="text-decoration-none my-auto">
+			<div class="my-auto position-relative">
+				<img src="/img/profile.png" alt="" class="profile-img" />
+				<span class="online position-absolute"></span>
+			</div>
+		</a>
+		<a href="/room.html" class="text-decoration-none my-auto text-dark">
+			<div class="my-auto ml-2">
+				<div>
+					<p class="m-0">
+						<strong>Yogi Pristiawan</strong>
+					</p>
+				</div>
+				<small class="message-preview last-seen">Online
+				</small>
+			</div>
+		</a>
+	</div>
+
+	<div class="container-fluid p-0 user-list d-flex mb-2 px-2">
+		<a href="#message" class="text-decoration-none my-auto">
+			<div class="my-auto position-relative">
+				<img src="/img/profile.png" alt="" class="profile-img" />
+				<span class="offline position-absolute"></span>
+			</div>
+		</a>
+		<a href="#message" class="text-decoration-none my-auto text-dark">
+			<div class="my-auto ml-2">
+				<div>
+					<p class="m-0">
+						<strong>Yogi</strong>
+					</p>
+				</div>
+				<small class="message-preview last-seen">Last seen 2 minutes ago
+				</small>
+			</div>
+		</a>
+	</div>
+
+	<div class="container-fluid p-0 user-list d-flex mb-2 px-2">
+		<a href="#message" class="text-decoration-none my-auto">
+			<div class="my-auto position-relative">
+				<img src="/img/profile.png" alt="" class="profile-img" />
+				<span class="offline position-absolute"></span>
+			</div>
+		</a>
+		<a href="#message" class="text-decoration-none my-auto text-dark">
+			<div class="my-auto ml-2">
+				<div>
+					<p class="m-0">
+						<strong>Yogi Pristiawan</strong>
+					</p>
+				</div>
+				<small class="message-preview last-seen">Last seen 2 hours ago
+				</small>
+			</div>
+		</a>
+	</div>
+	<!-- end of card body-->
+</div>
+@endsection

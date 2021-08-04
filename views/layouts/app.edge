@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Document</title>
+	<link rel="stylesheet" href="/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="/css/style.css" />
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+		integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+</head>
+
+<body>
+	<div class="container col-md-6">
+		<div class="card shadow mt-2">
+			<div class="card-header p-2 profile-header position-relative">
+				<div class="left-header d-flex position-absolute ml-2">
+					<div class="my-auto">
+						@if( _url != '/')
+						<a href="{{ _back }}" class="text-decoration-none text-white">
+							<i class="fa fa-arrow-left back" aria-hidden="true" id="back"></i>
+						</a>
+						@endif
+					</div>
+					<div class="ml-2">
+						<img src="/img/profile.png" alt="" class="profile-img mx-auto d-block" />
+					</div>
+					<h5 class="my-auto ml-2 profile-name">
+						Yogi Pristiawan
+					</h5>
+				</div>
+				<div class="right-header position-absolute">
+					<div class="btn-group dropleft">
+						<i class="fa fa-ellipsis-v option" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+							aria-hidden="true" id="option"></i>
+
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="#">Profile</a>
+							<a class="dropdown-item" href="#">Logout</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="position-relative">
+
+				@!section('body')
+
+				<!-- end of card body-->
+			</div>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
+	</script>
+</body>
+
+</html>

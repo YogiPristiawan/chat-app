@@ -1,0 +1,4 @@
+/node_modules
+/ngrok.exe
+/dump.rdb
+.env
