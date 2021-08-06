@@ -11,6 +11,14 @@ auth.post("/login", (req, res) => {
 	AuthController.login(req, res);
 });
 
+auth.get("/register", (req, res) => {
+	AuthController.register(req, res);
+});
+
+auth.post("/register", (req, res) => {
+	AuthController.store(req, res);
+});
+
 app.use("/auth", engine, auth);
 
 module.exports = app;

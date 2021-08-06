@@ -16,14 +16,14 @@
 	<div class="container col-md-6">
 		<div class="card shadow mt-2">
 			<div class="card-header text-center text-white mb-5">
-				<h5>Halaman Login</h5>
+				<h5>Halaman Register</h5>
 			</div>
 			<div class="card-body p-2">
 				<div class="mt-3 p-2 rounded">
 
 					@if(_flashMessage)
 					@if(_flashMessage.status == 200)
-					<div class="alert alert-success">
+					<div class="alert alert success">
 						{{ _flashMessage. message }}
 					</div>
 					@else
@@ -33,7 +33,12 @@
 					@endif
 					@endif
 
-					<form action="/auth/login" method="POST">
+					<form action="/auth/register" method="POST">
+
+						<div class="form-group">
+							<label for="username">Username</label>
+							<input type="text" name="username" class="form-control">
+						</div>
 
 						<div class="form-group">
 							<label for="email">Email</label>
@@ -44,14 +49,15 @@
 							<label for="password">Password</label>
 							<input type="password" name="password" class="form-control">
 						</div>
+
+						<div class="form-group">
+							<label for="conrifm_password">Confirm Password</label>
+							<input type="password" name="confirm_password" class="form-control">
+						</div>
 						<div class="container text-center">
 							<button class="btn btn-primary" type="submit">Login</button>
 						</div>
 					</form>
-
-					<small>
-						<p class="mt-4">Belum punya akun? <a href="/auth/register">daftar di sini</a></p>
-					</small>
 				</div>
 			</div>
 		</div>

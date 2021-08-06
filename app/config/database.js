@@ -1,22 +1,30 @@
-const { Pool } = require("pg");
+const { Sequelize } = require("sequelize");
 
-class Database {
-	constructor() {
-		this.pool = new Pool({
-			user: "postgres",
-			password: "root",
-			host: "127.0.0.1",
-			port: "5432",
-			database: "chat_app",
-			max: 20,
-			idleTimeoutMillis: 30000,
-			connectionTimeoutMillis: 2000,
-		});
-		if (!Database._instance) {
-			Database._instance = this;
-		}
-		return Database._instance;
+const db = new Sequelize(
+	process.env.DB_DATABASE,
+	process.env.DB_USERNAME,
+	process.env.DB_PASSWORD,
+	{
+		host: process.env.DB_HOST,
+		dialect: "postgres",
+		define: {
+			timestamps: true,
+			createdAt: "created_at",
+			updatedAt: "updated_at",
+			deletedAt: "deleted_at",
+		},
+		logging: false,
+	},
+);
+
+(async () => {
+	try {
+		await db.authenticate();
+		return console.log("database connection success");
+	} catch (error) {
+		console.log("failed to connect database, Error: " + error);
+		db.close();
 	}
-}
+})();
 
-module.exports = Database;
+module.exports = db;
