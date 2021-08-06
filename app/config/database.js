@@ -13,7 +13,7 @@ const db = new Sequelize(
 			updatedAt: "updated_at",
 			deletedAt: "deleted_at",
 		},
-		logging: false,
+		logging: console.log,
 	},
 );
 

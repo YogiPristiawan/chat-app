@@ -1,0 +1,42 @@
+const { DataTypes: dt, Sequelize } = require("sequelize");
+const db = require("./../config/database");
+const Users = require("./Users");
+
+const Chat = db.define(
+	"Chat",
+	{
+		id: {
+			type: dt.CHAR(36),
+			primaryKey: true,
+			defaultValue: Sequelize.UUIDV4,
+			allowNull: false,
+		},
+		sender_id: {
+			type: dt.CHAR(36),
+			allowNull: false,
+		},
+		receiver_id: {
+			type: dt.CHAR(36),
+			allowNull: false,
+		},
+		message: {
+			type: dt.TEXT,
+		},
+	},
+	{
+		tableName: "chat",
+	},
+);
+
+Chat.belongsTo(Users, {
+	foreignKey: "sender_id",
+	targetKey: "id",
+	as: "sender",
+});
+Chat.belongsTo(Users, {
+	foreignKey: "receiver_id",
+	targetKey: "id",
+	as: "receiver",
+});
+
+module.exports = Chat;

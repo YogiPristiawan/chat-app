@@ -18,20 +18,20 @@ app.use(
 	}),
 );
 app.use(flash({ sessionKeyName: "flashMessage" }));
-app.use((req, res, next) => {
-	if (
-		req.originalUrl == "/auth/login" ||
-		req.originalUrl == "/auth/register"
-	) {
-		return next();
-	} else {
-		if (req.session._login) {
-			return next();
-		}
-	}
+// app.use((req, res, next) => {
+// 	if (
+// 		req.originalUrl == "/auth/login" ||
+// 		req.originalUrl == "/auth/register"
+// 	) {
+// 		return next();
+// 	} else {
+// 		if (req.session._login) {
+// 			return next();
+// 		}
+// 	}
 
-	res.redirect("/auth/login");
-});
+// 	res.redirect("/auth/login");
+// });
 
 app.use(engine);
 app.use(express.urlencoded({ extended: false }));

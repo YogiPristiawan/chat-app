@@ -31,7 +31,13 @@ const Users = db.define(
 			allowNull: false,
 		},
 		last_seen: {
-			type: dt.DATE,
+			type: dt.BIGINT,
+		},
+		online: {
+			type: dt.BOOLEAN,
+		},
+		avatar_img: {
+			type: dt.STRING(255),
 		},
 	},
 	{
