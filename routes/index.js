@@ -1,13 +1,13 @@
 const router = require("express").Router();
-const chat = require("./web/chat");
-const { engine } = require("express-edge");
 const HomeController = require("./../app/controllers/home_controller");
-const ChatController = require("./../app/controllers/chat_controller");
+const chat = require("./web/chat");
+const auth = require("./web/auth");
 
-router.get("/", engine, (req, res) => {
+router.get("/", (req, res) => {
 	HomeController.index(req, res);
 });
 
 router.use(chat);
+router.use(auth);
 
 module.exports = router;
