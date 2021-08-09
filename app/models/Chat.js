@@ -6,9 +6,9 @@ const Chat = db.define(
 	"Chat",
 	{
 		id: {
-			type: dt.CHAR(36),
+			type: dt.BIGINT,
 			primaryKey: true,
-			defaultValue: Sequelize.UUIDV4,
+			autoIncrement: true,
 			allowNull: false,
 		},
 		sender_id: {

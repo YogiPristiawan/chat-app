@@ -9,7 +9,7 @@ chat.get("/new", (req, res, next) => {
 	ChatController.new(req, res);
 });
 
-chat.get("/:user_id", (req, res) => {
+chat.get("/?:partner_id", (req, res) => {
 	// console.log(req.params);
 	ChatController.getMessage(req, res);
 });

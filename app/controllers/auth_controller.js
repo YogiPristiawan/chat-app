@@ -36,6 +36,7 @@ exports.login = async (req, res) => {
 		});
 		return res.redirect("/auth/login");
 	}
+	req.session.user_id = users.id;
 	req.session.email = users.email;
 	req.session.username = users.username;
 	req.session._login = true;
