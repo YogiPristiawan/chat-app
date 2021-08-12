@@ -39,6 +39,15 @@ const Users = db.define(
 		avatar_img: {
 			type: dt.STRING(255),
 		},
+		user_conversation_id: {
+			type: dt.BIGINT,
+		},
+		socket_id: {
+			type: dt.STRING(255),
+		},
+		token: {
+			type: dt.STRING(255),
+		},
 	},
 	{
 		tableName: "users",

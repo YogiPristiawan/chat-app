@@ -13,6 +13,7 @@ const db = new Sequelize(
 			updatedAt: "updated_at",
 			deletedAt: "deleted_at",
 		},
+		timezone: "Asia/Jakarta",
 		logging: console.log,
 	},
 );

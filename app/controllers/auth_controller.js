@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const escapeHTML = require("escape-html");
 const { v4: uuidv4 } = require("uuid");
 const { DateTime } = require("luxon");
+const jwt = require("jsonwebtoken");
 const Users = require("./../models/Users");
 
 exports.index = async (req, res) => {
@@ -36,9 +37,32 @@ exports.login = async (req, res) => {
 		});
 		return res.redirect("/auth/login");
 	}
+	const token = jwt.sign(
+		{
+			iat: Math.floor(Date.now() / 1000),
+			user_id: users.id,
+			username: users.username,
+		},
+		process.env.JWT_SECRET,
+		{
+			algorithm: "HS256",
+			expiresIn: "2h",
+		},
+	);
+	await Users.update(
+		{
+			token: token,
+		},
+		{
+			where: {
+				id: users.id,
+			},
+		},
+	);
 	req.session.user_id = users.id;
 	req.session.email = users.email;
 	req.session.username = users.username;
+	req.session.token = token;
 	req.session._login = true;
 	return res.redirect("/");
 };

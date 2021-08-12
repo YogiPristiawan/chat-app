@@ -25,18 +25,18 @@ exports.new = async (req, res) => {
 };
 
 exports.getMessage = async (req, res) => {
-	// const sender_id = req.session.user_id;
+	const sender_id = "3a285c6f-675b-4503-8a84-90f5c392cb3c";
 	const partner_id = req.params.partner_id;
 	const chat = await Chat.findAll({
 		where: {
 			[Op.or]: [
 				{
-					sender_id: "1fc0cad0-2853-4129-b251-da982f13169b",
+					sender_id: "3a285c6f-675b-4503-8a84-90f5c392cb3c",
 					receiver_id: partner_id,
 				},
 				{
 					sender_id: partner_id,
-					receiver_id: "1fc0cad0-2853-4129-b251-da982f13169b",
+					receiver_id: "3a285c6f-675b-4503-8a84-90f5c392cb3c",
 				},
 			],
 		},
@@ -55,14 +55,11 @@ exports.getMessage = async (req, res) => {
 			},
 		],
 	});
-	chat.forEach((v, i) => {
-		console.log(v);
-	});
 
-	console.log(chat.length);
 	const data = {
 		chats: chat,
-		user_id: "1fc0cad0-2853-4129-b251-da982f13169b",
+		token: req.session.token,
+		user_id: "3a285c6f-675b-4503-8a84-90f5c392cb3c",
 		_back: "/",
 		_url: req.originalUrl,
 	};

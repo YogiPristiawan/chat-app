@@ -22,6 +22,9 @@ const Chat = db.define(
 		message: {
 			type: dt.TEXT,
 		},
+		conversation_id: {
+			type: dt.STRING,
+		},
 	},
 	{
 		tableName: "chat",
