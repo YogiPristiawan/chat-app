@@ -7,6 +7,11 @@ const escapeHTML = require("escape-html");
 
 exports.new = async (req, res) => {
 	const users = await Users.findAll({
+		where: {
+			id: {
+				[Op.ne]: req.session.user_id,
+			},
+		},
 		order: [
 			["online", "DESC"],
 			["last_seen", "DESC"],
@@ -62,6 +67,7 @@ exports.getMessage = async (req, res) => {
 				},
 			],
 		},
+		order: [["id", "ASC"]],
 		include: [
 			{
 				model: Users,

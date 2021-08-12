@@ -85,8 +85,18 @@ exports.index = async (req, res) => {
 									else
 										u1.username
 									end) as participant,
+									(
+										case
+										when
+											u1.id = :user_id
+										then
+											u2.online
+										else
+											u1.online
+										end
+									) as online,
 									chat.message,
-									chat.created_at,
+									chat.created_at,								
 									unread.unread
 								from chat
 								left join
@@ -112,6 +122,7 @@ exports.index = async (req, res) => {
 			type: QueryTypes.SELECT,
 		},
 	);
+	console.log(chat_list);
 	const data = {
 		chat_list,
 		_url: req.originalUrl,

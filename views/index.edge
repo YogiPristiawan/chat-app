@@ -7,7 +7,7 @@
 		<a href="#hello" class="text-decoration-none my-auto">
 			<div class="position-relative">
 				<img src="/img/profile.png" alt="" class="profile-img" />
-				<span class="offline position-absolute"></span>
+				<span class="{{ chat.online ? 'online' : 'offline'}} position-absolute"></span>
 			</div>
 		</a>
 		<a href="/chat/{{ chat.participant_id }}?unread={{ chat.unread ? 'true' : 'false'}}"

@@ -1,5 +1,7 @@
 import socket from "./socket.js";
 const send_message = document.getElementById("send-message");
+document.getElementById("chat-room").scrollIntoView(false);
+
 send_message.addEventListener("click", function (e) {
 	const message = document.getElementById("message").value;
 	if (message != "") {

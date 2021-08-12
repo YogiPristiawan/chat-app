@@ -37,6 +37,7 @@ module.exports.listen = function (server) {
 		Users.update(
 			{
 				socket_id: socket.id,
+				online: true,
 			},
 			{
 				where: {
@@ -45,6 +46,22 @@ module.exports.listen = function (server) {
 			},
 		).catch((err) => {
 			console.log(err);
+		});
+
+		socket.on("disconnect", () => {
+			Users.update(
+				{
+					online: false,
+					last_seen: Date.now(),
+				},
+				{
+					where: {
+						id: socket.decoded.user_id,
+					},
+				},
+			).catch((err) => {
+				console.log(err);
+			});
 		});
 
 		socket.on("message", async ({ to, data }) => {
