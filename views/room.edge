@@ -1,7 +1,7 @@
 @layout('layouts/app')
 @section('body')
 <div class="card-body px-2 pt-0 overflow-auto chat-room">
-	<div class="mt-4">
+	<div class="mt-4" id="chat-room">
 		@if(chats.length == 0)
 		<div class="mt-auto text-center">
 			<h4 class="text-white">Belum ada chat.</h4>

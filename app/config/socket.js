@@ -51,14 +51,14 @@ module.exports.listen = function (server) {
 			/**
 			 * get socket id
 			 */
-			Chat.create({
-				sender_id: socket.decoded.user_id,
-				receiver_id: to,
-				message: escapeHTML(data.message),
-				conversation_id: data.conversation_id,
-			}).catch((err) => {
-				console.log(err);
-			});
+			// Chat.create({
+			// 	sender_id: socket.decoded.user_id,
+			// 	receiver_id: to,
+			// 	message: escapeHTML(data.message),
+			// 	conversation_id: data.conversation_id,
+			// }).catch((err) => {
+			// 	console.log(err);
+			// });
 
 			const user = await Users.findOne({
 				where: {
@@ -69,7 +69,10 @@ module.exports.listen = function (server) {
 
 			socket
 				.to(user.socket_id)
-				.emit("message", { from: socket.id, message: data.message });
+				.emit("message", {
+					from: socket.decoded.user_id,
+					message: data.message,
+				});
 		});
 	});
 };

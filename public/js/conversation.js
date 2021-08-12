@@ -26,6 +26,20 @@ send_message.addEventListener("click", function (e) {
 		// 		conversation_id,
 		// 	}),
 		// );
+
+		const chat_room = document.getElementById("chat-room");
+		chat_room.innerHTML += `
+		<div class="mt-1 msg-send-wrap">
+			<div class="talk-bubble round right-top tri-right send ml-auto m-0 border">
+				<div class="talktext p-3">
+					<p>
+						${message}
+					</p>
+				</div>
+			</div>
+		</div>
+		`;
+
 		socket.emit("message", {
 			to: partner_id,
 			data: {
