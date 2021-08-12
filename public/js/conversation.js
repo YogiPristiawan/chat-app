@@ -39,7 +39,7 @@ send_message.addEventListener("click", function (e) {
 			</div>
 		</div>
 		`;
-
+		document.getElementById("message").value = "";
 		socket.emit("message", {
 			to: partner_id,
 			data: {

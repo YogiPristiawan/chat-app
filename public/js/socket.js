@@ -4,6 +4,12 @@ const socket = io("http://localhost:3000", {
 	},
 	transports: ["websocket"],
 });
+// const socket = io("https://ed259b49c6de.ngrok.io", {
+// 	auth: {
+// 		token: window.localStorage.getItem("_token"),
+// 	},
+// 	transports: ["websocket"],
+// });
 
 socket.on("message", ({ from, data }) => {
 	const pathname = window.location.pathname;
@@ -32,7 +38,6 @@ socket.on("message", ({ from, data }) => {
 			"message-preview-" + from,
 		);
 		const message_count = document.getElementById("message-count-" + from);
-		message_count.style.display = "inline-block";
 
 		/**
 		 * emit unread
@@ -40,13 +45,14 @@ socket.on("message", ({ from, data }) => {
 		socket.emit("unread", { message_id: data.message_id });
 
 		message_preview.innerHTML = `
-			<small>
-				${data.message}
-			</small>	
+		<small>
+		${data.message}
+		</small>	
 		`;
 
 		let count = message_count.innerHTML;
 		message_count.innerHTML = Number(count) + 1;
+		message_count.style.display = "inline-block";
 	}
 });
 

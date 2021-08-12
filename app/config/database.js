@@ -14,7 +14,7 @@ const db = new Sequelize(
 			deletedAt: "deleted_at",
 		},
 		timezone: "Asia/Jakarta",
-		logging: false,
+		logging: console.log,
 	},
 );
 

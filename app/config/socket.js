@@ -56,6 +56,7 @@ module.exports.listen = function (server) {
 				receiver_id: to,
 				message: escapeHTML(data.message),
 				conversation_id: data.conversation_id,
+				read: false,
 			}).catch((err) => {
 				console.log(err);
 			});
