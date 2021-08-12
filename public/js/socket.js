@@ -5,17 +5,23 @@ const socket = io("http://localhost:3000", {
 	transports: ["websocket"],
 });
 
-socket.on("message", ({ from, message }) => {
+socket.on("message", ({ from, data }) => {
 	const pathname = window.location.pathname;
 	const pattern = `/chat/${from}`;
 	if (pathname.match(new RegExp(pattern))) {
 		const chat_room = document.getElementById("chat-room");
+
+		/**
+		 * emit read event
+		 */
+		socket.emit("read", { message_id: data.message_id });
+
 		chat_room.innerHTML += `
 		<div class="mt-1 msg-receive-wrap">
 			<div class="talk-bubble round right-top tri-right receive ml-auto m-0 border">
 				<div class="talktext p-3">
 					<p>
-						${message}
+						${data.message}
 					</p>
 				</div>
 			</div>
@@ -25,11 +31,22 @@ socket.on("message", ({ from, message }) => {
 		const message_preview = document.getElementById(
 			"message-preview-" + from,
 		);
+		const message_count = document.getElementById("message-count-" + from);
+		message_count.style.display = "inline-block";
+
+		/**
+		 * emit unread
+		 */
+		socket.emit("unread", { message_id: data.message_id });
+
 		message_preview.innerHTML = `
 			<small>
-				${message}
+				${data.message}
 			</small>	
 		`;
+
+		let count = message_count.innerHTML;
+		message_count.innerHTML = Number(count) + 1;
 	}
 });
 

@@ -10,17 +10,31 @@
 				<span class="offline position-absolute"></span>
 			</div>
 		</a>
-		<a href="/chat/{{ chat.participant_id }}" class="text-decoration-none my-auto text-dark flex-fill">
+		<a href="/chat/{{ chat.participant_id }}?unread={{ chat.unread ? 'true' : 'false'}}"
+			class="text-decoration-none my-auto text-dark flex-fill">
 			<div class="ml-2">
 				<div>
 					<p class="m-0">
 						<strong>{{ chat.participant }}</strong>
 					</p>
 				</div>
-				<div class="message-preview overflow-hidden" id="message-preview-{{chat.participant_id}}">
-					<small>
-						{{ chat.message }}
-					</small>
+				<div class="d-flex">
+					<div class="flex-fill message-preview overflow-hidden" id="message-preview-{{chat.participant_id}}">
+						<small>
+							{{ chat.message }}
+						</small>
+					</div>
+					@if( chat.unread )
+					<span class="message-count text-center font-weight-bold text-white"
+						id="message-count-{{ chat.participant_id }}">
+						{{ chat.unread }}
+					</span>
+					@else
+					<span class="message-count text-center font-weight-bold text-white" style="display: none;"
+						id="message-count-{{ chat.participant_id }}">
+						0
+					</span>
+					@endif
 				</div>
 			</div>
 		</a>

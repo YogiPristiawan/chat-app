@@ -25,6 +25,9 @@ const Chat = db.define(
 		conversation_id: {
 			type: dt.STRING,
 		},
+		read: {
+			type: dt.BOOLEAN,
+		},
 	},
 	{
 		tableName: "chat",

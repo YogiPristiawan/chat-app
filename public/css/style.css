@@ -318,3 +318,11 @@ textarea {
 .profile-img:hover {
 	cursor: pointer;
 }
+
+.message-count {
+	width: 1.4rem;
+	height: 1.4rem;
+	border-radius: 50%;
+	display: inline-block;
+	background-color: rgb(17, 221, 17);
+}

@@ -27,18 +27,38 @@ exports.new = async (req, res) => {
 };
 
 exports.getMessage = async (req, res) => {
-	const sender_id = req.session.user_id;
+	const user_id = req.session.user_id;
 	const partner_id = req.params.partner_id;
+
+	/**
+	 * update asynchronusly
+	 */
+	if (req.query.unread) {
+		Chat.update(
+			{
+				read: true,
+			},
+			{
+				where: {
+					sender_id: partner_id,
+					receiver_id: user_id,
+				},
+			},
+		).catch((err) => {
+			console.log(err);
+		});
+	}
+
 	const chat = await Chat.findAll({
 		where: {
 			[Op.or]: [
 				{
-					sender_id: req.session.user_id,
+					sender_id: user_id,
 					receiver_id: partner_id,
 				},
 				{
 					sender_id: partner_id,
-					receiver_id: req.session.user_id,
+					receiver_id: user_id,
 				},
 			],
 		},
@@ -62,7 +82,7 @@ exports.getMessage = async (req, res) => {
 		chats: chat,
 		token: req.session.token,
 		partner_id: partner_id,
-		user_id: req.session.user_id,
+		user_id: user_id,
 		_back: "/",
 		_url: req.originalUrl,
 	};
@@ -70,7 +90,7 @@ exports.getMessage = async (req, res) => {
 	if (chat.length == 0) {
 		const users = await Users.findAll({
 			where: {
-				[Op.or]: [{ id: req.session.user_id }, { id: partner_id }],
+				[Op.or]: [{ id: user_id }, { id: partner_id }],
 			},
 			attributes: ["user_conversation_id"],
 		});
@@ -89,6 +109,7 @@ exports.getMessage = async (req, res) => {
 	return res.render("room", data);
 };
 
+// belum dipakai
 exports.sendMessage = async (req, res) => {
 	const receiver_id = req.params.partner_id;
 	const message = escapeHTML(req.body.message);

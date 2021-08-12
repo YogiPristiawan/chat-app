@@ -23,6 +23,12 @@ app.use(
 	}),
 );
 app.use(flash({ sessionKeyName: "flashMessage" }));
+// app.use((req, res, next) => {
+// 	req.session.user_id = "3a285c6f-675b-4503-8a84-90f5c392cb3c";
+// 	req.session.email = "yogi@gmail.com";
+// 	req.session.username = "Yogi Pristiaawan";
+// 	return next();
+// });
 app.use((req, res, next) => {
 	if (
 		req.originalUrl == "/auth/login" ||

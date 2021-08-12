@@ -1,51 +1,117 @@
-const { Sequelize, Op } = require("sequelize");
+const { Sequelize, Op, QueryTypes } = require("sequelize");
 const Chat = require("./../models/chat");
 const Users = require("./../models/users");
+const db = require("./../config/database");
 exports.index = async (req, res) => {
 	const user_id = req.session.user_id;
-	const chat_list = await Chat.findAll({
-		attributes: [
-			"message",
-			"created_at",
-			[
-				Sequelize.literal(
-					`CASE WHEN sender.id = '${user_id}' THEN receiver.username ELSE sender.username END`,
-				),
-				"participant",
-			],
-			[
-				Sequelize.literal(
-					`CASE WHEN sender.id = '${user_id}' THEN receiver.id ELSE sender.id END`,
-				),
-				"participant_id",
-			],
-		],
-		raw: true,
-		include: [
-			{
-				model: Users,
-				as: "sender",
-				required: true,
-				attributes: [],
-			},
-			{
-				model: Users,
-				as: "receiver",
-				required: true,
-				attributes: [],
-			},
-		],
-		where: {
-			id: {
-				[Op.in]: [
-					Sequelize.literal(
-						`SELECT MAX(id) FROM chat WHERE sender_id = '${user_id}' OR receiver_id = '${user_id}' GROUP BY conversation_id`,
-					),
-				],
-			},
-		},
-	});
+	// const chat_list = await Chat.findAll({
+	// 	attributes: [
+	// 		"message",
+	// 		"created_at",
+	// 		[
+	// 			Sequelize.literal(
+	// 				`CASE WHEN sender.id = '${user_id}' THEN receiver.username ELSE sender.username END`,
+	// 			),
+	// 			"participant",
+	// 		],
+	// 		[
+	// 			Sequelize.literal(
+	// 				`CASE WHEN sender.id = '${user_id}' THEN receiver.id ELSE sender.id END`,
+	// 			),
+	// 			"participant_id",
+	// 		],
+	// 	],
+	// 	raw: true,
+	// 	include: [
+	// 		{
+	// 			model: Users,
+	// 			as: "sender",
+	// 			required: true,
+	// 			attributes: [],
+	// 		},
+	// 		{
+	// 			model: Users,
+	// 			as: "receiver",
+	// 			required: true,
+	// 			attributes: [],
+	// 		},
+	// 	],
+	// 	where: {
+	// 		id: {
+	// 			[Op.in]: [
+	// 				Sequelize.literal(
+	// 					`SELECT MAX(id) FROM chat WHERE sender_id = '${user_id}' OR receiver_id = '${user_id}' GROUP BY conversation_id`,
+	// 				),
+	// 			],
+	// 		},
+	// 	},
+	// });
 
+	const chat_list = await db.query(
+		`
+									with unread as (
+									select	
+									sender_id,
+									(case
+									when
+										count(read) = 0
+									then
+										0
+									else
+										count(read)
+									end) as unread
+									from
+										chat
+									where receiver_id = :user_id
+									and read = false
+									group by read, sender_id
+								)
+								select
+									(
+									case
+									when
+										u1.id = :user_id
+									then
+										u2.id
+									else
+										u1.id
+									end
+									) as participant_id,
+									(case
+									when		
+										u1.id = :user_id
+									then
+										u2.username
+									else
+										u1.username
+									end) as participant,
+									chat.message,
+									chat.created_at,
+									unread.unread
+								from chat
+								left join
+									unread on unread.sender_id = chat.sender_id
+								inner join
+									users as u1 on u1.id = chat.sender_id
+								inner join
+									users as u2 on u2.id = chat.receiver_id
+								where chat.id in (
+									select
+										max(id)
+									from chat
+									where sender_id = :user_id
+									or receiver_id = :user_id
+									group by conversation_id
+								)
+								order by chat.created_at desc
+								`,
+		{
+			replacements: {
+				user_id: user_id,
+			},
+			type: QueryTypes.SELECT,
+		},
+	);
 	const data = {
 		chat_list,
 		_url: req.originalUrl,

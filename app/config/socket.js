@@ -51,14 +51,14 @@ module.exports.listen = function (server) {
 			/**
 			 * get socket id
 			 */
-			// Chat.create({
-			// 	sender_id: socket.decoded.user_id,
-			// 	receiver_id: to,
-			// 	message: escapeHTML(data.message),
-			// 	conversation_id: data.conversation_id,
-			// }).catch((err) => {
-			// 	console.log(err);
-			// });
+			const chat = await Chat.create({
+				sender_id: socket.decoded.user_id,
+				receiver_id: to,
+				message: escapeHTML(data.message),
+				conversation_id: data.conversation_id,
+			}).catch((err) => {
+				console.log(err);
+			});
 
 			const user = await Users.findOne({
 				where: {
@@ -67,12 +67,39 @@ module.exports.listen = function (server) {
 				attributes: ["socket_id"],
 			});
 
-			socket
-				.to(user.socket_id)
-				.emit("message", {
-					from: socket.decoded.user_id,
+			socket.to(user.socket_id).emit("message", {
+				from: socket.decoded.user_id,
+				data: {
+					message_id: chat.id,
 					message: data.message,
-				});
+				},
+			});
+		});
+
+		socket.on("unread", async ({ message_id }) => {
+			await Chat.update(
+				{
+					read: false,
+				},
+				{
+					where: {
+						id: message_id,
+					},
+				},
+			);
+		});
+
+		socket.on("read", async ({ message_id }) => {
+			await Chat.update(
+				{
+					read: true,
+				},
+				{
+					where: {
+						id: message_id,
+					},
+				},
+			);
 		});
 	});
 };
