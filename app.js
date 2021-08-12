@@ -40,6 +40,7 @@ app.use((req, res, next) => {
 
 app.use(engine);
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.set("views", `${__dirname}/views`);
 app.use(routes);
 

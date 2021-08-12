@@ -42,10 +42,20 @@
 <!-- input message -->
 <div class="position-absolute py-2 px-4 input-wrap d-flex justify-content-end">
 	<div class="form-group w-100 mr-3 my-auto">
-		<textarea name="message" id="user-message" cols="30" rows="1" class="form-control"></textarea>
+		@if(conversation_id)
+		<input type="hidden" value="{{ conversation_id }}" id="conversation_id">
+		@else
+		<input type="hidden" value="{{ chats[0].conversation_id }}" id="conversation_id">
+		@endif
+		<input type="hidden" value="{{ partner_id }}" id="partner_id">
+		<textarea name="message" id="message" cols="30" rows="1" class="form-control"></textarea>
 	</div>
-	<div class="send-button-wrapper" id="send-message">
+	<div class="send-button-wrapper" id="send-message" data-user_id="">
 		<i class="fa fa-paper-plane send-button" aria-hidden="true"></i>
 	</div>
 </div>
+@endsection
+@section('script')
+@super
+<script type="module" src="/js/conversation.js"></script>
 @endsection

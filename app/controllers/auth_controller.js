@@ -15,6 +15,7 @@ exports.index = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
+	console.log(req.body);
 	const users = await Users.findOne({
 		where: {
 			email: req.body.email,
@@ -26,7 +27,8 @@ exports.login = async (req, res) => {
 			status: 404,
 			message: "Email belum terdaftar.",
 		});
-		return res.redirect("/auth/login");
+		// return res.redirect("/auth/login");
+		return res.status(404).json({ message: "Email belum terdaftar." });
 	}
 
 	const match = await bcrypt.compare(req.body.password, users.password);
@@ -35,7 +37,10 @@ exports.login = async (req, res) => {
 			status: 401,
 			message: "Password yang anda masukkan salah.",
 		});
-		return res.redirect("/auth/login");
+		// return res.redirect("/auth/login");
+		return res
+			.status(401)
+			.json({ message: "Password yang anda masukkan salah." });
 	}
 	const token = jwt.sign(
 		{
@@ -45,7 +50,7 @@ exports.login = async (req, res) => {
 		},
 		process.env.JWT_SECRET,
 		{
-			algorithm: "HS256",
+			algorithm: process.env.JWT_ENCRYPT || "HS256",
 			expiresIn: "2h",
 		},
 	);
@@ -62,9 +67,13 @@ exports.login = async (req, res) => {
 	req.session.user_id = users.id;
 	req.session.email = users.email;
 	req.session.username = users.username;
-	req.session.token = token;
 	req.session._login = true;
-	return res.redirect("/");
+	return res.status(200).json({
+		username: users.username,
+		email: users.email,
+		user_id: users.id,
+		token: token,
+	});
 };
 
 exports.register = async (req, res) => {
