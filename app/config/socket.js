@@ -5,7 +5,12 @@ const Users = require("./../models/Users");
 const Chat = require("./../models/Chat");
 
 module.exports.listen = function (server) {
-	const io = socket_io(server, {});
+	const io = socket_io(server, {
+		cors: {
+			origin: ["http://localhost:3000"],
+			credentials: true,
+		},
+	});
 
 	io.use((socket, next) => {
 		if (!socket.handshake.auth.token)
@@ -19,7 +24,7 @@ module.exports.listen = function (server) {
 					algorithms: process.env.JWT_ENCRYPT || "HS256",
 				},
 				(err, decoded) => {
-					if (err) return next(new Error(err));
+					if (err) return next(new Error(err.message));
 					socket.decoded = decoded;
 					return next();
 				},

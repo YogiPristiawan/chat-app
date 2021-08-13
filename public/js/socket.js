@@ -10,7 +10,6 @@ const socket = io("http://localhost:3000", {
 // 	},
 // 	transports: ["websocket"],
 // });
-
 socket.on("message", ({ from, data }) => {
 	const pathname = window.location.pathname;
 	const pattern = `/chat/${from}`;
@@ -68,6 +67,9 @@ socket.on("connect", () => {
 
 socket.on("connect_error", (e) => {
 	console.log(e.message);
+	if (e.message == "invalid signature" || e.message == "jwt malformed") {
+		window.location.replace("http://localhost:3000/auth/login");
+	}
 });
 
 socket.on("disconnect", (reason) => {

@@ -49,7 +49,7 @@ exports.login = async (req, res) => {
 		process.env.JWT_SECRET,
 		{
 			algorithm: process.env.JWT_ENCRYPT || "HS256",
-			expiresIn: "2h",
+			expiresIn: 7500,
 		},
 	);
 	await Users.update(
@@ -66,6 +66,7 @@ exports.login = async (req, res) => {
 	req.session.email = users.email;
 	req.session.username = users.username;
 	req.session.avatar_img = users.avatar_img;
+	req.session.token = token;
 	req.session._login = true;
 	return res.status(200).json({
 		username: users.username,

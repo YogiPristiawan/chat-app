@@ -51,7 +51,6 @@ app.use((req, res, next) => {
 			return next();
 		}
 	}
-
 	res.redirect("/auth/login");
 });
 
