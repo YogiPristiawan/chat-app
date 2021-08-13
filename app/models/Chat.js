@@ -1,6 +1,6 @@
 const { DataTypes: dt, Sequelize } = require("sequelize");
-const db = require("./../config/database");
-const Users = require("./Users");
+const db = require("../config/database");
+const Users = require("./users");
 
 const Chat = db.define(
 	"Chat",
