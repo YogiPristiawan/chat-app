@@ -12,6 +12,7 @@ exports.profile = async (req, res) => {
 		_flashMessage: flash,
 		_url: req.originalUrl,
 		_username: req.session.username,
+		_avatar_img: req.session.avatar_img,
 		_back: "/",
 	};
 
@@ -80,6 +81,12 @@ exports.profileUpdate = async (req, res) => {
 					},
 				},
 			);
+
+			/**
+			 * update session
+			 */
+			req.session.avatar_img = req.file.filename;
+			req.session.username = username;
 
 			req.flash("message", {
 				status: 200,
