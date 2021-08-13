@@ -1,7 +1,7 @@
 const Users = require("./../models/Users");
 const { Op } = require("sequelize");
 const { timeSince } = require("./../helpers/datetime");
-const Chat = require("./../models/chat");
+const Chat = require("./../models/Chat");
 const { response } = require("express");
 const escapeHTML = require("escape-html");
 const { Sequelize } = require("sequelize");
