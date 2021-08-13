@@ -15,34 +15,7 @@
 <body>
 	<div class="container col-md-6">
 		<div class="card shadow mt-2">
-			<div class="card-header p-2 profile-header position-relative">
-				<div class="left-header d-flex position-absolute ml-2">
-					<div class="my-auto">
-						@if( _url != '/')
-						<a href="{{ _back }}" class="text-decoration-none text-white">
-							<i class="fa fa-arrow-left back" aria-hidden="true" id="back"></i>
-						</a>
-						@endif
-					</div>
-					<div class="ml-2">
-						<img src="/img/profile.png" alt="" class="profile-img mx-auto d-block" />
-					</div>
-					<h5 class="my-auto ml-2 profile-name">
-						Yogi Pristiawan
-					</h5>
-				</div>
-				<div class="right-header position-absolute">
-					<div class="btn-group dropleft">
-						<i class="fa fa-ellipsis-v option" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-							aria-hidden="true" id="option"></i>
-
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#">Profile</a>
-							<a class="dropdown-item" href="#">Logout</a>
-						</div>
-					</div>
-				</div>
-			</div>
+			@!section('header')
 			<div class="position-relative">
 
 				@!section('body')

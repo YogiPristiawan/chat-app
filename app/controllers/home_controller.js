@@ -4,49 +4,6 @@ const Users = require("./../models/users");
 const db = require("./../config/database");
 exports.index = async (req, res) => {
 	const user_id = req.session.user_id;
-	// const chat_list = await Chat.findAll({
-	// 	attributes: [
-	// 		"message",
-	// 		"created_at",
-	// 		[
-	// 			Sequelize.literal(
-	// 				`CASE WHEN sender.id = '${user_id}' THEN receiver.username ELSE sender.username END`,
-	// 			),
-	// 			"participant",
-	// 		],
-	// 		[
-	// 			Sequelize.literal(
-	// 				`CASE WHEN sender.id = '${user_id}' THEN receiver.id ELSE sender.id END`,
-	// 			),
-	// 			"participant_id",
-	// 		],
-	// 	],
-	// 	raw: true,
-	// 	include: [
-	// 		{
-	// 			model: Users,
-	// 			as: "sender",
-	// 			required: true,
-	// 			attributes: [],
-	// 		},
-	// 		{
-	// 			model: Users,
-	// 			as: "receiver",
-	// 			required: true,
-	// 			attributes: [],
-	// 		},
-	// 	],
-	// 	where: {
-	// 		id: {
-	// 			[Op.in]: [
-	// 				Sequelize.literal(
-	// 					`SELECT MAX(id) FROM chat WHERE sender_id = '${user_id}' OR receiver_id = '${user_id}' GROUP BY conversation_id`,
-	// 				),
-	// 			],
-	// 		},
-	// 	},
-	// });
-
 	const chat_list = await db.query(
 		`
 									with unread as (
@@ -95,6 +52,16 @@ exports.index = async (req, res) => {
 											u1.online
 										end
 									) as online,
+									(
+										case
+										when
+											u1.id = :user_id
+										then
+											u2.avatar_img
+										else
+											u1.avatar_img
+										end
+									) as avatar_img,
 									chat.message,
 									chat.created_at,								
 									unread.unread
@@ -126,6 +93,8 @@ exports.index = async (req, res) => {
 	const data = {
 		chat_list,
 		_url: req.originalUrl,
+		_avatar_img: req.session.avatar_img,
+		_username: req.session.username,
 	};
 
 	return res.render("index", data);

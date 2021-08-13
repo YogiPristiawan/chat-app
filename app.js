@@ -27,6 +27,7 @@ app.use(flash({ sessionKeyName: "flashMessage" }));
 // 	req.session.user_id = "3a285c6f-675b-4503-8a84-90f5c392cb3c";
 // 	req.session.email = "yogi@gmail.com";
 // 	req.session.username = "Yogi Pristiaawan";
+// 	req.session.avatar_img = null;
 // 	return next();
 // });
 app.use((req, res, next) => {

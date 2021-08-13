@@ -67,6 +67,7 @@ exports.login = async (req, res) => {
 	req.session.user_id = users.id;
 	req.session.email = users.email;
 	req.session.username = users.username;
+	req.session.avatar_img = users.avatar_img;
 	req.session._login = true;
 	return res.status(200).json({
 		username: users.username,
@@ -117,4 +118,9 @@ exports.store = async (req, res) => {
 
 		return res.redirect("/auth/register");
 	}
+};
+
+exports.logout = async (req, res) => {
+	await req.session.destroy();
+	return res.redirect("/");
 };

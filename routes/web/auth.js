@@ -19,6 +19,10 @@ auth.post("/register", (req, res) => {
 	AuthController.store(req, res);
 });
 
+auth.get("/logout", (req, res) => {
+	AuthController.logout(req, res);
+});
+
 app.use("/auth", engine, auth);
 
 module.exports = app;

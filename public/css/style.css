@@ -22,6 +22,11 @@
 	border-radius: 50%;
 }
 
+.profile-img-big {
+	width: 200px;
+	border-radius: 50%;
+}
+
 .card-header {
 	background-color: #39775ffb;
 }
@@ -301,7 +306,7 @@ textarea {
 
 .chat-room {
 	padding-bottom: 6rem;
-	background-image: url(./../img/bg.jpg);
+	background-image: url(./../img/default_background.jpg);
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-color: white;

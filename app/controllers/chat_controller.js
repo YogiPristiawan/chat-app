@@ -4,6 +4,7 @@ const { timeSince } = require("./../helpers/datetime");
 const Chat = require("./../models/chat");
 const { response } = require("express");
 const escapeHTML = require("escape-html");
+const { Sequelize } = require("sequelize");
 
 exports.new = async (req, res) => {
 	const users = await Users.findAll({
@@ -26,6 +27,8 @@ exports.new = async (req, res) => {
 		users: users,
 		_back: "/",
 		_url: req.originalUrl,
+		_avatar_img: req.session.avatar_img,
+		_username: req.session.username,
 	};
 
 	return res.render("users", data);
@@ -84,13 +87,29 @@ exports.getMessage = async (req, res) => {
 		],
 	});
 
+	/**
+	 * get data partner
+	 */
+	const partner = await Users.findOne({
+		attributes: ["id", "username", "avatar_img"],
+		where: {
+			id: partner_id,
+		},
+	});
+
 	let data = {
 		chats: chat,
 		token: req.session.token,
-		partner_id: partner_id,
+		partner: {
+			id: partner.id,
+			username: partner.username,
+			avatar_img: partner.avatar_img,
+		},
 		user_id: user_id,
 		_back: "/",
 		_url: req.originalUrl,
+		_avatar_img: req.session.avatar_img,
+		_username: req.session.username,
 	};
 
 	if (chat.length == 0) {

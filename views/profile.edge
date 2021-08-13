@@ -31,38 +31,44 @@
 </div>
 @endsection
 @section('body')
-<div class="card-body px-2 pt-0 overflow-auto">
-	@each( user in users)
-	<div class="container-fluid p-0 user-list d-flex mb-2 px-2">
-		<a href="#message" class="text-decoration-none my-auto">
-			<div class="my-auto position-relative">
-				<img src="/img/{{ _avatar_img ? _avatar_img : 'default_avatar.png'}}" alt="" class="profile-img" />
-				@if(user.online)
-				<span class="online position-absolute"></span>
-				@else
-				<span class="offline position-absolute"></span>
-				@endif
+<div class="card-body px-5 pt-3 mt-5">
+	<div class="container">
+		<form action="/user/profile/update" enctype="multipart/form-data" method="POST">
+			<div class="text-center">
+				<a href="/img/{{ _avatar_img ? _avatar_img : 'default_avatar.png'}}">
+					<img src="/img/{{ _avatar_img ? _avatar_img : 'default_avatar.png'}}" alt="" class="profile-img-big">
+				</a>
 			</div>
-		</a>
-		<a href="/chat/{{ user.id }}" class="text-decoration-none my-auto text-dark flex-fill">
-			<div class="my-auto ml-2">
-				<div>
-					<p class="m-0">
-						<strong>{{ user.username }}</strong>
-					</p>
+			<div class="mt-5">
+				@if(_flashMessage)
+
+				@if(_flashMessage.status == 200)
+				<div class="alert alert-success alert-sm">
+					{{ _flashMessage.message }}
 				</div>
-				<small class="message-preview last-seen">
-					@if(user.online)
-					online
-					@else
-					{{ user.last_seen }}
-					@endif
-				</small>
+
+				@else
+				<div class="alert alert-danger alert-sm">
+					{{ _flashMessage.message }}
+				</div>
+				@endif
+
+				@endif
+				<div class="form-group">
+					<label for="username"><strong>Username</strong></label>
+					<input type="text" class="form-control form-control-sm" name="username" value="{{ username }}">
+				</div>
+				<div class="form-group">
+					<label for="avatar_img"><strong>Avatar</strong></label>
+					<input type="file" class="form-control-file" name="avatar_img">
+				</div>
+
+				<button class="btn btn-success mt-4">Simpan</button>
 			</div>
-		</a>
+		</form>
 	</div>
-	@endeach
-</div>
-<!-- end of card body-->
+
+
+
 </div>
 @endsection

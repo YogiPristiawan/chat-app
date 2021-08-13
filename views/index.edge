@@ -1,12 +1,43 @@
 @layout('layouts/app')
+@section('header')
+<div class="card-header p-2 profile-header position-relative">
+	<div class="left-header d-flex position-absolute ml-2">
+		<div class="my-auto">
+			@if( _url != '/')
+			<a href="{{ _back }}" class="text-decoration-none text-white">
+				<i class="fa fa-arrow-left back" aria-hidden="true" id="back"></i>
+			</a>
+			@endif
+		</div>
+		<div class="ml-2">
+			<img src="/img/{{ _avatar_img ? _avatar_img : 'default_avatar.png'}}" alt=""
+				class="profile-img mx-auto d-block" />
+		</div>
+		<h5 class="my-auto ml-2 profile-name">
+			{{ _username }}
+		</h5>
+	</div>
+	<div class="right-header position-absolute">
+		<div class="btn-group dropleft">
+			<i class="fa fa-ellipsis-v option" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+				aria-hidden="true" id="option"></i>
+
+			<div class="dropdown-menu">
+				<a class="dropdown-item" href="/user/profile">Profile</a>
+				<a class="dropdown-item" href="/auth/logout" id="logout">Logout</a>
+			</div>
+		</div>
+	</div>
+</div>
+@endsection
 @section('body')
 <div class="card-body px-2 pt-3 overflow-auto">
 
 	@each( chat in chat_list)
 	<div class="container-fluid p-0 user-list d-flex mb-2 px-2">
-		<a href="#hello" class="text-decoration-none my-auto">
+		<a href="/img/{{ chat.avatar_img ? chat.avatar_img : 'default_avatar.png'}}" class="text-decoration-none my-auto">
 			<div class="position-relative">
-				<img src="/img/profile.png" alt="" class="profile-img" />
+				<img src="/img/{{ chat.avatar_img ? chat.avatar_img : 'default_avatar.png'}}" alt="" class="profile-img" />
 				<span class="{{ chat.online ? 'online' : 'offline'}} position-absolute"></span>
 			</div>
 		</a>

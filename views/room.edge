@@ -1,4 +1,35 @@
 @layout('layouts/app')
+@section('header')
+<div class="card-header p-2 profile-header position-relative">
+	<div class="left-header d-flex position-absolute ml-2">
+		<div class="my-auto">
+			@if( _url != '/')
+			<a href="{{ _back }}" class="text-decoration-none text-white">
+				<i class="fa fa-arrow-left back" aria-hidden="true" id="back"></i>
+			</a>
+			@endif
+		</div>
+		<div class="ml-2">
+			<img src="/img/{{ partner.avatar_img ? partner.avatar_img : 'default_avatar.png'}}" alt=""
+				class="profile-img mx-auto d-block" />
+		</div>
+		<h5 class="my-auto ml-2 profile-name">
+			{{ partner.username }}
+		</h5>
+	</div>
+	<div class="right-header position-absolute">
+		<div class="btn-group dropleft">
+			<i class="fa fa-ellipsis-v option" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+				aria-hidden="true" id="option"></i>
+
+			<div class="dropdown-menu">
+				<a class="dropdown-item" href="/user/profile">Profile</a>
+				<a class="dropdown-item" href="/auth/logout" id="logout">Logout</a>
+			</div>
+		</div>
+	</div>
+</div>
+@endsection
 @section('body')
 <div class="card-body px-2 pt-0 overflow-auto chat-room">
 	<div class="mt-4" id="chat-room">
@@ -47,7 +78,7 @@
 		@else
 		<input type="hidden" value="{{ chats[0].conversation_id }}" id="conversation_id">
 		@endif
-		<input type="hidden" value="{{ partner_id }}" id="partner_id">
+		<input type="hidden" value="{{ partner.id }}" id="partner_id">
 		<textarea name="message" id="message" cols="30" rows="1" class="form-control"></textarea>
 	</div>
 	<div class="send-button-wrapper" id="send-message" data-user_id="">

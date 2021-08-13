@@ -48,7 +48,7 @@ module.exports.listen = function (server) {
 			console.log(err);
 		});
 
-		socket.on("disconnect", () => {
+		socket.on("disconnect", (reason) => {
 			Users.update(
 				{
 					online: false,
@@ -62,6 +62,7 @@ module.exports.listen = function (server) {
 			).catch((err) => {
 				console.log(err);
 			});
+			console.log("SOCKET DISCONNECTED", reason);
 		});
 
 		socket.on("message", async ({ to, data }) => {

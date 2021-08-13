@@ -4,7 +4,7 @@ const socket = io("http://localhost:3000", {
 	},
 	transports: ["websocket"],
 });
-// const socket = io("https://ed259b49c6de.ngrok.io", {
+// const socket = io("https://3bac9eace51b.ngrok.io", {
 // 	auth: {
 // 		token: window.localStorage.getItem("_token"),
 // 	},
@@ -68,6 +68,12 @@ socket.on("disconnect", (reason) => {
 	console.log(reason);
 });
 
-console.log(window.location.pathname);
+/**
+ * delete token
+ */
+document.getElementById("logout").addEventListener("click", function (e) {
+	window.localStorage.removeItem("_token");
+	socket.disconnect();
+});
 
 export default socket;

@@ -9,7 +9,7 @@ document.getElementById("login-button").addEventListener("click", function (e) {
 				let response = JSON.parse(this.responseText);
 				window.localStorage.setItem("_token", response.token);
 				window.location.replace("http://localhost:3000");
-				// window.location.replace("https://ed259b49c6de.ngrok.io");
+				// window.location.replace("https://3bac9eace51b.ngrok.io");
 			} else {
 				let alert = document.getElementById("flash-message");
 				let err_message = JSON.parse(this.responseText).message;
@@ -22,7 +22,7 @@ document.getElementById("login-button").addEventListener("click", function (e) {
 		}
 	};
 	xhr.open("POST", "http://localhost:3000/auth/login");
-	// xhr.open("POST", "https://ed259b49c6de.ngrok.io/auth/login");
+	// xhr.open("POST", "https://3bac9eace51b.ngrok.io/auth/login");
 	xhr.setRequestHeader("Content-Type", "application/json");
 	xhr.send(JSON.stringify({ email: email, password: password }));
 });
