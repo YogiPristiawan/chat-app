@@ -1,6 +1,4 @@
 const { Sequelize, Op, QueryTypes } = require("sequelize");
-const Chat = require("./../models/chat");
-const Users = require("./../models/users");
 const db = require("./../config/database");
 exports.index = async (req, res) => {
 	const user_id = req.session.user_id;
