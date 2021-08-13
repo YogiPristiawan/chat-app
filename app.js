@@ -5,7 +5,16 @@ const http = require("http");
 const server = http.createServer(app);
 const session = require("express-session");
 const { flash } = require("express-flash-message");
-const { config, engine } = require("express-edge");
+const { engine } = require("express-edge");
+const Redis = require("ioredis");
+const redis = new Redis({
+	port: process.env.REDIS_PORT || 6379,
+	host: process.env.REDIS_HOST || "127.0.0.1",
+	family: 4,
+	password: process.env.REDIS_PASSWORD || "",
+	db: 0,
+});
+let RedisStore = require("connect-redis")(session);
 const routes = require("./routes/index");
 const io = require("./app/config/socket");
 
@@ -14,9 +23,10 @@ io.listen(server);
 app.use(express.static(__dirname + "/public"));
 app.use(
 	session({
-		secret: "secret",
+		secret: process.env.SESSION_SECRET || "not secret",
+		store: new RedisStore({ client: redis }),
 		resave: false,
-		saveUninitialized: true,
+		saveUninitialized: false,
 		cookie: {
 			maxAge: 2 * 3600 * 1000,
 		},

@@ -1,7 +1,5 @@
 const bcrypt = require("bcrypt");
 const escapeHTML = require("escape-html");
-const { v4: uuidv4 } = require("uuid");
-const { DateTime } = require("luxon");
 const jwt = require("jsonwebtoken");
 const Users = require("./../models/Users");
 
