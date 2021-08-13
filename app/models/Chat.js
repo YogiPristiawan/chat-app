@@ -2,7 +2,7 @@ const { DataTypes: dt, Sequelize } = require("sequelize");
 const db = require("../config/database");
 const Users = require("./users");
 
-const Chat = db.define(
+const chat = db.define(
 	"Chat",
 	{
 		id: {
@@ -34,15 +34,15 @@ const Chat = db.define(
 	},
 );
 
-Chat.belongsTo(Users, {
+chat.belongsTo(Users, {
 	foreignKey: "sender_id",
 	targetKey: "id",
 	as: "sender",
 });
-Chat.belongsTo(Users, {
+chat.belongsTo(Users, {
 	foreignKey: "receiver_id",
 	targetKey: "id",
 	as: "receiver",
 });
 
-module.exports = Chat;
+module.exports = chat;

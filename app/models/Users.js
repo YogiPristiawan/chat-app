@@ -1,7 +1,7 @@
 const { DataTypes: dt, Sequelize } = require("sequelize");
 const db = require("../config/database");
 
-const Users = db.define(
+const users = db.define(
 	"Users",
 	{
 		id: {
@@ -54,4 +54,4 @@ const Users = db.define(
 	},
 );
 
-module.exports = Users;
+module.exports = users;
