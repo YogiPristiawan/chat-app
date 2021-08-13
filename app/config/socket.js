@@ -2,7 +2,7 @@ const socket_io = require("socket.io");
 const jwt = require("jsonwebtoken");
 const escapeHTML = require("escape-html");
 const Users = require("./../models/Users");
-const Chat = require("../models/chat");
+const Chat = require("./../models/Chat");
 
 module.exports.listen = function (server) {
 	const io = socket_io(server, {});
