@@ -2,5 +2,6 @@
 /ngrok.exe
 /dump.rdb
 .env
+/public/img/*
 /public/img/!default_avatar.png
 /public/img/!default_background.jpg
