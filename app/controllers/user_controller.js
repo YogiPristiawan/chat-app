@@ -1,4 +1,4 @@
-const Users = require("../models/users");
+const Users = require("./../models/Users");
 const { Op } = require("sequelize");
 const multer = require("multer");
 const path = require("path");
