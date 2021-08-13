@@ -2,9 +2,7 @@ const Users = require("./../models/Users");
 const { Op } = require("sequelize");
 const { timeSince } = require("./../helpers/datetime");
 const Chat = require("./../models/Chat");
-const { response } = require("express");
 const escapeHTML = require("escape-html");
-const { Sequelize } = require("sequelize");
 
 exports.new = async (req, res) => {
 	const users = await Users.findAll({
@@ -91,7 +89,7 @@ exports.getMessage = async (req, res) => {
 	 * get data partner
 	 */
 	const partner = await Users.findOne({
-		attributes: ["id", "username", "avatar_img"],
+		attributes: ["id", "username", "avatar_img", "online", "last_seen"],
 		where: {
 			id: partner_id,
 		},
@@ -104,6 +102,10 @@ exports.getMessage = async (req, res) => {
 			id: partner.id,
 			username: partner.username,
 			avatar_img: partner.avatar_img,
+			online: partner.online,
+			last_seen: `terakhir dilihat ${timeSince(
+				partner.last_seen,
+			)} yang lalu`,
 		},
 		user_id: user_id,
 		_back: "/",

@@ -61,7 +61,10 @@ exports.index = async (req, res) => {
 										end
 									) as avatar_img,
 									chat.message,
-									chat.created_at,								
+									TO_CHAR(
+										chat.created_at,
+										'DD Mon YY - HH24 : MI'
+									) AS created_at,								
 									unread.unread
 								from chat
 								left join
@@ -87,7 +90,7 @@ exports.index = async (req, res) => {
 			type: QueryTypes.SELECT,
 		},
 	);
-	console.log(chat_list);
+
 	const data = {
 		chat_list,
 		_url: req.originalUrl,

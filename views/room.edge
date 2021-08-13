@@ -13,9 +13,12 @@
 			<img src="/img/{{ partner.avatar_img ? partner.avatar_img : 'default_avatar.png'}}" alt=""
 				class="profile-img mx-auto d-block" />
 		</div>
-		<h5 class="my-auto ml-2 profile-name">
-			{{ partner.username }}
-		</h5>
+		<div>
+			<h5 class="my-auto ml-2 profile-name">
+				{{ partner.username }}
+			</h5>
+			<small class="my-auto ml-2">{{ partner.online ? 'Online' : partner.last_seen}}</small>
+		</div>
 	</div>
 	<div class="right-header position-absolute">
 		<div class="btn-group dropleft">

@@ -39,6 +39,10 @@ socket.on("message", ({ from, data }) => {
 		);
 		const message_count = document.getElementById("message-count-" + from);
 
+		if (!message_preview || !message_count) {
+			socket.emit("unread", { message_id: data.message_id });
+			return window.location.replace("http://localhost:3000");
+		}
 		/**
 		 * emit unread
 		 */
@@ -53,6 +57,8 @@ socket.on("message", ({ from, data }) => {
 		let count = message_count.innerHTML;
 		message_count.innerHTML = Number(count) + 1;
 		message_count.style.display = "inline-block";
+	} else {
+		return window.location.replace("http://localhost:3000");
 	}
 });
 
