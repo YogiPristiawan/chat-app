@@ -13,7 +13,6 @@ exports.index = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-	console.log(req.body);
 	const users = await Users.findOne({
 		where: {
 			email: req.body.email,

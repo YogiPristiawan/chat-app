@@ -35,7 +35,6 @@ module.exports.listen = function (server) {
 	});
 
 	io.on("connection", (socket) => {
-		console.log("SOCKET CONNECTED");
 		/**
 		 * insert asynchrounusly
 		 */
@@ -67,7 +66,6 @@ module.exports.listen = function (server) {
 			).catch((err) => {
 				console.log(err);
 			});
-			console.log("SOCKET DISCONNECTED", reason);
 		});
 
 		socket.on("message", async ({ to, data }) => {
