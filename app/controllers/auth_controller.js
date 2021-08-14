@@ -89,9 +89,16 @@ exports.store = async (req, res) => {
 	const password = req.body.password;
 	const confirm_password = req.body.confirm_password;
 
+	if (password.length < 6) {
+		req.flash("message", {
+			status: 400,
+			message: "Password harus berisi setidaknya 6 karakter.",
+		});
+	}
+
 	if (password != confirm_password) {
 		req.flash("message", {
-			status: 401,
+			status: 400,
 			message: "Password tidak cocok.",
 		});
 		return res.redirect("/auth/register");
