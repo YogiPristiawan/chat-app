@@ -23,7 +23,7 @@
 }
 
 .profile-img-big {
-	width: 200px;
+	max-width: 200px;
 	border-radius: 50%;
 }
 
@@ -330,4 +330,24 @@ textarea {
 	border-radius: 50%;
 	display: inline-block;
 	background-color: rgb(17, 221, 17);
+}
+
+.delete-avatar {
+	font-size: 2rem;
+	width: 3rem;
+	height: 3rem;
+	position: absolute;
+	color: rgb(255, 255, 255);
+	background-color: rgb(179, 179, 179);
+	border-radius: 50%;
+	right: 0;
+	bottom: 0;
+}
+
+.delete-avatar:hover {
+	cursor: pointer;
+}
+
+.avatar_profile_wrapper {
+	max-width: 200px;
 }

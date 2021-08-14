@@ -1,8 +1,7 @@
 const Users = require("./../models/Users");
-const { Op } = require("sequelize");
 const multer = require("multer");
 const path = require("path");
-const { nextTick } = require("process");
+const fsPromises = require("fs/promises");
 
 exports.profile = async (req, res) => {
 	const flash = (await req.consumeFlash("message"))[0];
@@ -15,7 +14,6 @@ exports.profile = async (req, res) => {
 		_avatar_img: req.session.avatar_img,
 		_back: "/",
 	};
-
 	return res.render("profile", data);
 };
 
@@ -70,23 +68,35 @@ exports.profileUpdate = async (req, res) => {
 				throw new Error(err);
 			}
 
-			await Users.update(
-				{
-					avatar_img: req.file.filename,
-					username: username,
+			if (req.session.avatar_img !== null && req.file) {
+				fsPromises
+					.unlink(`public\\img\\${req.session.avatar_img}`)
+					.catch((err) => {
+						console.log(err);
+					});
+			}
+
+			let data_update = {
+				username: username,
+			};
+			if (req.file) {
+				data_update.avatar_img = req.file.filename;
+			}
+			const update = await Users.update(data_update, {
+				where: {
+					id: req.session.user_id,
 				},
-				{
-					where: {
-						id: req.session.user_id,
-					},
-				},
-			);
+			});
 
 			/**
 			 * update session
 			 */
-			req.session.avatar_img = req.file.filename;
-			req.session.username = username;
+			if (update) {
+				if (req.file) {
+					req.session.avatar_img = req.file.filename;
+				}
+				req.session.username = username;
+			}
 
 			req.flash("message", {
 				status: 200,
@@ -103,4 +113,36 @@ exports.profileUpdate = async (req, res) => {
 			return res.redirect("/user/profile");
 		}
 	});
+};
+
+exports.deleteAvatar = async (req, res) => {
+	const user_id = req.session.user_id;
+	const avatar_img = req.session.avatar_img;
+
+	try {
+		await Users.update(
+			{
+				avatar_img: null,
+			},
+			{
+				where: {
+					id: user_id,
+				},
+			},
+		);
+		await fsPromises.unlink(`public\\img\\${avatar_img}`);
+		req.session.avatar_img = null;
+		req.flash("message", {
+			status: 200,
+			message: "Berhasil update profile.",
+		});
+		return res.redirect("/user/profile");
+	} catch (err) {
+		console.log(err);
+		req.flash("message", {
+			status: 500,
+			message: "Gagal hapus avatar.",
+		});
+		return res.redirect("/user/profile");
+	}
 };
