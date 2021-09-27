@@ -10,6 +10,12 @@ exports.new = async (req, res) => {
 			id: {
 				[Op.ne]: req.session.user_id,
 			},
+			last_seen: {
+				[Op.ne]: null,
+			},
+			online: {
+				[Op.ne]: null,
+			},
 		},
 		order: [
 			["online", "DESC"],

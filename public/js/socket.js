@@ -32,7 +32,7 @@ socket.on("message", ({ from, data }) => {
 			</div>
 		</div>
 		`;
-	} else if (pathname.match(/\//)) {
+	} else if (pathname.match(/^\/$/)) {
 		const message_preview = document.getElementById(
 			"message-preview-" + from,
 		);
@@ -56,8 +56,6 @@ socket.on("message", ({ from, data }) => {
 		let count = message_count.innerHTML;
 		message_count.innerHTML = Number(count) + 1;
 		message_count.style.display = "inline-block";
-	} else {
-		return window.location.replace("http://localhost:3000");
 	}
 });
 

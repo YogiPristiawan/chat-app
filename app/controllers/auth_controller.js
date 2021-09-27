@@ -20,6 +20,16 @@ exports.login = async (req, res) => {
 	});
 
 	if (users == null) {
+		Users.update(
+			{
+				online: true,
+			},
+			{
+				where: {
+					email: req.body.email,
+				},
+			},
+		);
 		req.flash("message", {
 			status: 404,
 			message: "Email belum terdaftar.",
